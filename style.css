@@ -1,0 +1,21 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+:root{
+  --primay-color:#2196f3;
+  --secondary-color:#F44336;
+  --background-color:#F6F6F6;
+  --splash-background:rgba(3, 169, 244, 0.9);
+}
+
+.container-info {
+  width: 1080px;
+  margin: 20px auto;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 3px solid var(--primay-color);
+}
