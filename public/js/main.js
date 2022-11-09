@@ -3,7 +3,9 @@ const cardWrapper = document.querySelector(".card-wrapper");
 const wrongTries = document.querySelector(".wrong-tries span");
 const cards = Array.from(document.querySelectorAll(".card"));
 const numberOfCardsArray = Array.from(Array(cards.length).keys());
-const duration = 1000;
+const winningSound = document.querySelector(".niceTry");
+const losingSound = document.querySelector(".tryAgain");
+const duration = 2000;
 
 document.querySelector(".start-btn button").onclick = function () {
   // Store Player Name
@@ -68,8 +70,10 @@ function MatchCheck(firstPickCard, secondPickCard) {
   if (firstPickCard.dataset.techology === secondPickCard.dataset.techology) {
     firstPickCard.classList.add("match");
     secondPickCard.classList.add("match");
-  } else {
+    winningSound.play();
+} else {
     wrongTries.innerHTML = parseInt(wrongTries.innerHTML) + 1;
+    losingSound.play();
   }
 }
 
