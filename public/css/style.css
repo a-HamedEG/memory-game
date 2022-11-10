@@ -9,6 +9,7 @@
   /* --primay-color:#4e2d2d; */
   --card-color:#333;
   --secondary-color:#F44336;
+  --game-over-color:#ee0f3fee;
   --background-color:#F6F6F6;
   --section-padding: 20px;
   --section-margin: 20px;
@@ -32,6 +33,39 @@ body {
   background-color: var(--splash-background);
 }
 
+.game-over {
+  display: none;
+}
+
+.lost {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  z-index: 2;
+  background-color: var(--game-over-color);
+  font-size: 50px;
+  font-weight: bold;
+  color: aliceblue;
+}
+
+.lost button {
+  background-color: var(--primay-color);
+  color: white;
+  font-size: 20px;
+  padding: 20px;
+  border-radius: 5px;
+  border: none;
+  font-weight: 500;
+  cursor: pointer;
+}
+
 .start-btn button {
   background-color: var(--secondary-color);
   color: white;
@@ -53,6 +87,21 @@ body {
   border: 3px solid var(--primay-color);
   font-size: 20px;
 }
+
+.root-timer {
+  font-family: sans-serif;
+  display: inline-block;
+  margin-top: 10px;
+  padding: 10px;
+  /* border: 3px solid #219b21; */
+  border-radius: 10px;
+  font-size: 36px;
+  font-weight: bold;
+}
+
+/* .time-out {
+  border: 3px solid rgb(236, 104, 104);
+} */
 
 .name > span {
   color: var(--secondary-color);

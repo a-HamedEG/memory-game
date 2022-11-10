@@ -5,7 +5,58 @@ const cards = Array.from(document.querySelectorAll(".card"));
 const numberOfCardsArray = Array.from(Array(cards.length).keys());
 const winningSound = document.querySelector(".niceTry");
 const losingSound = document.querySelector(".tryAgain");
-const duration = 2000;
+// Game Variables
+const duration = 1000;
+const timeInSecond = 60;
+
+class Timer {
+  constructor(root, remainingSeconds) {
+    root.innerHTML = Timer.getHTML();
+    this.timerElements = {
+      minutes: root.querySelector(".minutes"),
+      seconds: root.querySelector(".seconds"),
+    };
+    this.remainingSeconds = remainingSeconds;
+    this.start();
+  }
+
+  updateTimeInterface() {
+    const minutes = Math.floor(this.remainingSeconds / 60);
+    const seconds = this.remainingSeconds % 60;
+
+    this.timerElements.minutes.textContent = minutes
+      .toString()
+      .padStart(2, "0");
+    this.timerElements.seconds.textContent = seconds
+      .toString()
+      .padStart(2, "0");
+  }
+
+  start() {
+    this.interval = setInterval(() => {
+      this.remainingSeconds--;
+      this.updateTimeInterface();
+
+      if (this.remainingSeconds == 0) {
+        this.stop();
+      }
+    }, 1000);
+  }
+
+  stop() {
+    document.querySelector(".root-timer").classList.add("time-out");
+    clearInterval(this.interval);
+    document.querySelector(".game-over").classList = 'lost';
+    cardWrapper.classList.add("no-clicking");
+  }
+
+  static getHTML() {
+    return `        
+      <span class="minutes">00</span>
+      :
+      <span class="seconds">00</span>`;
+  }
+}
 
 document.querySelector(".start-btn button").onclick = function () {
   // Store Player Name
@@ -18,7 +69,12 @@ document.querySelector(".start-btn button").onclick = function () {
   }
   // remove start Game Overlay
   document.querySelector(".start-btn").remove();
+  const Time = new Timer(document.querySelector(".root-timer"), timeInSecond);
 };
+
+document.querySelector(".game-over button").onclick = function () {
+  location.reload();
+}
 // Shuffle Array Numbers to Get a Random order
 shuffle(numberOfCardsArray);
 
@@ -71,7 +127,7 @@ function MatchCheck(firstPickCard, secondPickCard) {
     firstPickCard.classList.add("match");
     secondPickCard.classList.add("match");
     winningSound.play();
-} else {
+  } else {
     wrongTries.innerHTML = parseInt(wrongTries.innerHTML) + 1;
     losingSound.play();
   }
