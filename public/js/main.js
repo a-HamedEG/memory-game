@@ -4,6 +4,10 @@ const wrongTries = document.querySelector(".wrong-tries span");
 const winningSound = document.querySelector(".niceTry");
 const losingSound = document.querySelector(".tryAgain");
 
+import JSConfetti from "js-confetti";
+
+const jsConfetti = new JSConfetti();
+
 // Game Variables
 const duration = 1000;
 const timeInSecond = 120;
@@ -32,23 +36,29 @@ class Timer {
   }
 
   start() {
-    this.interval = setInterval(() => {
+    Timer.interval = setInterval(() => {
       this.remainingSeconds--;
       this.updateTimeInterface();
 
       if (this.remainingSeconds == 0) {
-        this.stop();
+        Timer.stop();
       }
     }, 1000);
   }
 
-  stop() {
+  static stop() {
     document.querySelector(".root-timer").classList.add("time-out");
-    clearInterval(this.interval);
-    document.querySelector(".game-over").classList = 'lost';
+    clearInterval(Timer.interval);
     cardWrapper.classList.add("no-clicking");
+    if (document.querySelectorAll(".match").length !== cardsdata.length * 2) {
+      document.querySelector(".game-over").classList = "lost";
+    }
   }
 
+  static win() {
+    Timer.stop();
+    jsConfetti.addConfetti();
+  }
   static getHTML() {
     return `        
       <span class="minutes">00</span>
@@ -57,37 +67,48 @@ class Timer {
   }
 }
 
-const cardsdata = [{
-  cardName : "code",
-  imgName : "code.svg"
-},{
-  cardName : "css",
-  imgName : "css.svg"
-},{
-  cardName : "html",
-  imgName : "html.svg"
-},{
-  cardName : "php",
-  imgName : "php.svg"
-},{
-  cardName : "nodejs",
-  imgName : "nodejs.svg"
-},{
-  cardName : "react",
-  imgName : "react.svg"
-},{
-  cardName : "vuejs",
-  imgName : "vuejs.svg"
-},{
-  cardName : "wordpress",
-  imgName : "wordpress.svg"
-},{
-  cardName : "laravel",
-  imgName : "laravel.svg"
-},{
-  cardName : "javascript",
-  imgName : "javascript.svg"
-}]
+const cardsdata = [
+  {
+    cardName: "code",
+    imgName: "code.svg",
+  },
+  {
+    cardName: "css",
+    imgName: "css.svg",
+  },
+  {
+    cardName: "html",
+    imgName: "html.svg",
+  },
+  {
+    cardName: "php",
+    imgName: "php.svg",
+  },
+  {
+    cardName: "nodejs",
+    imgName: "nodejs.svg",
+  },
+  {
+    cardName: "react",
+    imgName: "react.svg",
+  },
+  {
+    cardName: "vuejs",
+    imgName: "vuejs.svg",
+  },
+  {
+    cardName: "wordpress",
+    imgName: "wordpress.svg",
+  },
+  {
+    cardName: "laravel",
+    imgName: "laravel.svg",
+  },
+  {
+    cardName: "javascript",
+    imgName: "javascript.svg",
+  },
+];
 
 async function shuffle(array) {
   // Simply Change the index of the Array
@@ -100,7 +121,6 @@ async function shuffle(array) {
     random;
 
   while (current > 0) {
-    console.log(current)
     random = Math.floor(Math.random() * current);
     current--;
     // 1- Stores the last index value in a -Temp- Variable
@@ -113,7 +133,7 @@ async function shuffle(array) {
 }
 
 const load = async () => {
-  await generateCards(cardsdata)
+  await generateCards(cardsdata);
 
   const cards = Array.from(document.querySelectorAll(".card"));
   const numberOfCardsArray = Array.from(Array(cards.length).keys());
@@ -127,16 +147,16 @@ const load = async () => {
     // Add onClick Event
     card.addEventListener("click", () => flipCard(card));
   });
-}
+};
 
-document.addEventListener('load', load())
+document.addEventListener("load", load());
 
 // generate html for Cards
 async function generateCards(cardsdata) {
-  let cardsHtml='';
+  let cardsHtml = "";
   for (let i = 0; i < cardsdata.length; i++) {
     const card = 
-    `<div class="card" data-techology="${cardsdata[i].cardName}">
+    ` <div class="card" data-techology="${cardsdata[i].cardName}">
         <div class="face front"></div>
         <div class="face back">
           <img src="./public/imgs/${cardsdata[i].imgName}" alt="${cardsdata[i].cardName}">
@@ -150,11 +170,10 @@ async function generateCards(cardsdata) {
         </div>
       </div>
     `;
-    cardsHtml += card
+    cardsHtml += card;
   }
-  cardWrapper.innerHTML = cardsHtml
+  cardWrapper.innerHTML = cardsHtml;
 }
-
 
 // Example usage:
 
@@ -174,14 +193,11 @@ document.querySelector(".start-btn button").onclick = function () {
 
 document.querySelector(".game-over button").onclick = function () {
   location.reload();
-}
-
-
-
+};
 
 function flipCard(card) {
   card.classList.add("is-flipped");
-  
+
   // Checking if Two Cards is Selected to Check thier Match
   if (document.querySelectorAll(".is-flipped").length == 2) {
     // prevent any Clicking on Cards Wrapper For better Experience
@@ -192,6 +208,10 @@ function flipCard(card) {
     MatchCheck(firstPickCard, secondPickCard);
     setTimeOutFor(secondPickCard, "is-flipped");
     setTimeOutFor(firstPickCard, "is-flipped");
+    if (document.querySelectorAll(".match").length === cardsdata.length * 2) {
+      Timer.win();
+      jsConfetti.addConfetti();
+    }
   }
 }
 
