@@ -1,6 +1,7 @@
 ## Memory Game
 
 It is a Memory Game project built using vanilla JS. The celebration is displayed using [confetti](https://www.npmjs.com/package/js-confetti).
+<br>
 To check the deployed version visit [link](https://memorize-pics.web.app/).
 
 ## How to Use
@@ -13,11 +14,10 @@ To check the deployed version visit [link](https://memorize-pics.web.app/).
 ## Screenshots
 
 ![memory-game](https://github.com/a-HamedEG/memory-game/blob/main/memory-1.png)
-
 *Screenshot 1: Starting Game*
+
 ![memory-game](https://github.com/a-HamedEG/memory-game/blob/main/memory-4.png)
-
 *Screenshot 2: Win the Game*
-![memory-game](https://github.com/a-HamedEG/memory-game/blob/main/memory-3.png)
 
+![memory-game](https://github.com/a-HamedEG/memory-game/blob/main/memory-3.png)
 *Screenshot 3: lose the Game*
